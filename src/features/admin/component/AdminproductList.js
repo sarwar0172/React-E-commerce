@@ -7,7 +7,7 @@ import {
   SelectAllProducts,
   SelectCatagory,
   SelecttotalItems,
-} from "../ProductSlice";
+} from "../../product-list/ProductSlice";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { Fragment } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
@@ -23,39 +23,33 @@ import {
 
 import { ITEMS_PER_PAGE } from "../../../app/constant";
 
-
 const sortOptions = [
   { name: "Best Rating", sort: "-rating", order: "desc", current: false },
   { name: "Price: Low to High", sort: "price", order: "asc", current: false },
   { name: "Price: High to Low", sort: "-price", order: "desc", current: false },
 ];
 
-
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-export default function ProductList() {
+export default function AdminProductList() {
   const dispatch = useDispatch();
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const products = useSelector(SelectAllProducts)
-  const totalItem = products.items
+  const products = useSelector(SelectAllProducts);
+  const totalItem = products.items;
 
-  const category=useSelector(SelectCatagory)
+  const category = useSelector(SelectCatagory);
   const [filter, setfilter] = useState({});
   const [sort, setSort] = useState({});
   const [page, setPage] = useState(1);
-
 
   const filters = [
     {
       id: "category",
       name: "category",
-      options: category
+      options: category,
     },
   ];
-
-
 
   const handlefilter = (e, section, option) => {
     const newFilter = { ...filter };
@@ -85,18 +79,16 @@ export default function ProductList() {
     setPage(page);
   };
 
+  useEffect(() => {
+    const pagination = { _page: page };
+    dispatch(fetchAllProductsByFilterAsync({ filter, sort, pagination }));
+  }, [dispatch, filter, sort, page]);
 
   useEffect(() => {
-    const pagination = {_page:page,};
-    dispatch(fetchAllProductsByFilterAsync( {filter, sort, pagination} ));
-    
-  }, [dispatch, filter,sort,page]);
+    dispatch(fetchAllCategoriesAsync());
+  }, [dispatch]);
 
-  useEffect(()=>{
-   dispatch(fetchAllCategoriesAsync())
-  },[dispatch])
-
-const totalpage=Math.ceil(totalItem / ITEMS_PER_PAGE)
+  const totalpage = Math.ceil(totalItem / ITEMS_PER_PAGE);
   return (
     <div>
       {/* product filter */}
@@ -365,47 +357,63 @@ const totalpage=Math.ceil(totalItem / ITEMS_PER_PAGE)
 
                 {/* Product grid */}
                 <div className="lg:col-span-3">
+                  <div>
+                    <button className=" mx-8 rounded-md bg-green-600 px-3 py-2 text-sm font-semibold leading-6 text-white">
+                      Add products
+                    </button>
+                  </div>
                   {/* products */}
 
                   <div className="bg-white">
                     <div className="mx-auto max-w-2xl px-4 py-0 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
                       <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-                        {
-                        products.data?products.data.map((product) => (
-                          <Link to={`/product-detail/${product.id}`}>
-                            <div key={product.id} className="group relative">
-                              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                                <img
-                                  src={product.images[0]}
-                                  alt={product.images}
-                                  className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                />
-                              </div>
-                              <div className="mt-4 flex justify-between">
-                                <div>
-                                  <h3 className="text-sm text-gray-700">
-                                    <div href={product.href}>
-                                      <span
-                                        aria-hidden="true"
-                                        className="absolute inset-0"
+                        {products.data
+                          ? products.data.map((product) => (
+                              <div>
+                                <Link to={`/product-detail/${product.id}`}>
+                                  <div
+                                    key={product.id}
+                                    className="group relative"
+                                  >
+                                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                                      <img
+                                        src={product.images[0]}
+                                        alt={product.images}
+                                        className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                                       />
-                                      {product.title}
                                     </div>
-                                  </h3>
-                                  <p className="mt-1 text-sm text-gray-500">
-                                    {product.color}
-                                  </p>
+                                    <div className="mt-4 flex justify-between">
+                                      <div>
+                                        <h3 className="text-sm text-gray-700">
+                                          <div href={product.href}>
+                                            <span
+                                              aria-hidden="true"
+                                              className="absolute inset-0"
+                                            />
+                                            {product.title}
+                                          </div>
+                                        </h3>
+                                        <p className="mt-1 text-sm text-gray-500">
+                                          {product.color}
+                                        </p>
+                                      </div>
+                                      <p className="text-sm font-medium text-gray-900">
+                                        {product.price}
+                                      </p>
+                                    </div>
+                                    <p className="text-sm font-medium text-gray-900">
+                                      rating: {product.rating}
+                                    </p>
+                                  </div>
+                                </Link>
+                                <div>
+                                  <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-6 text-white">
+                                    Edit
+                                  </button>
                                 </div>
-                                <p className="text-sm font-medium text-gray-900">
-                                  {product.price}
-                                </p>
                               </div>
-                              <p className="text-sm font-medium text-gray-900">
-                                rating: {product.rating}
-                              </p>
-                            </div>
-                          </Link>
-                        )):null}
+                            ))
+                          : null}
                       </div>
                     </div>
                   </div>
@@ -418,14 +426,13 @@ const totalpage=Math.ceil(totalItem / ITEMS_PER_PAGE)
             <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
               <div className="flex flex-1 justify-between sm:hidden">
                 <div
-                  onClick={()=>handlePage(page>1?page-1:page)}
+                  onClick={() => handlePage(page > 1 ? page - 1 : page)}
                   className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
                 >
                   Previous
                 </div>
                 <div
-
-                  onClick={()=>handlePage(page<totalpage?page+1:page)}
+                  onClick={() => handlePage(page < totalpage ? page + 1 : page)}
                   className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
                 >
                   Next
@@ -449,7 +456,7 @@ const totalpage=Math.ceil(totalItem / ITEMS_PER_PAGE)
                     aria-label="Pagination"
                   >
                     <div
-                      onClick={()=>handlePage(page>1?page-1:page)}
+                      onClick={() => handlePage(page > 1 ? page - 1 : page)}
                       className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
                     >
                       <span className="sr-only">Previous</span>
@@ -461,16 +468,18 @@ const totalpage=Math.ceil(totalItem / ITEMS_PER_PAGE)
                       length: totalpage,
                     }).map((el, index) => (
                       <div
-                        onClick={(e)=>handlePage(index+1)}
+                        onClick={(e) => handlePage(index + 1)}
                         aria-current="page"
                         className="relative z-10 inline-flex items-center bg-black-600 px-4 py-2 text-sm font-semibold text-black focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:cursor-pointer"
                       >
-                        {index+1}
+                        {index + 1}
                       </div>
                     ))}
 
                     <div
-                       onClick={()=>handlePage(page<totalpage?page+1:page)}
+                      onClick={() =>
+                        handlePage(page < totalpage ? page + 1 : page)
+                      }
                       className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
                     >
                       <span className="sr-only">Next</span>

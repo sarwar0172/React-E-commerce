@@ -1,12 +1,25 @@
+import React from "react";
+import { Link, Navigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { selectLoggedInUser, createUserAsync } from "../authSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function Signup() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const dispatch = useDispatch();
+  const user = useSelector(selectLoggedInUser);
+
   return (
     <div>
-
-<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      {user && <Navigate to="/" replace={true}></Navigate>}
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="mx-auto h-10 w-auto"
@@ -17,35 +30,62 @@ function Signup() {
             signup in to your account
           </h2>
         </div>
-
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form
+            className="space-y-6"
+            onSubmit={handleSubmit((data) => {
+              dispatch(
+                createUserAsync({
+                  email: data.email,
+                  password: data.password,
+                  address: [],
+                  role:'user'
+                  // TODO:this role can be directly given on backend
+                })
+              );
+              console.log(data);
+            })}
+          >
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 Email address
               </label>
               <div className="mt-2">
                 <input
                   id="email"
-                  name="email"
+                  {...register("email", {
+                    required: true,
+                    pattern: {
+                      value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                      message: "Email is not valied",
+                    },
+                  })}
                   type="email"
                   autoComplete="email"
-                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              {errors.email && (
+                <p className="text-red-700">{errors.email.message}</p>
+              )}
             </div>
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
                   Password
                 </label>
               </div>
               <div className="mt-2">
                 <input
                   id="password"
-                  name="password"
+                  {...register("password", { required: true })}
                   type="password"
                   autoComplete="current-password"
                   required
@@ -56,19 +96,29 @@ function Signup() {
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                 confrom Password
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  confrom Password
                 </label>
               </div>
               <div className="mt-2">
                 <input
-                  id="confrom-password"
-                  name="confrom-password"
+                  id="confromPassword"
+                  {...register("confromPassword", {
+                    required: true,
+                    validate: (value, fromValues) =>
+                      value === fromValues.password ||
+                      "password does not match",
+                  })}
                   type="password"
-                  required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              {errors.confromPassword && (
+                <p className="text-red-700">{errors.confromPassword.message}</p>
+              )}
             </div>
 
             <div>
@@ -82,17 +132,18 @@ function Signup() {
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-           Already a memeber?{" "}
-            <Link to="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            Already a memeber?{" "}
+            <Link
+              to="/login"
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
               Login your account
             </Link>
           </p>
         </div>
       </div>
-
-
     </div>
-  )
+  );
 }
 
-export default Signup
+export default Signup;

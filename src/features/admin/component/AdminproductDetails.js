@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { Radio, RadioGroup } from "@headlessui/react";
-import { SelectedProductByid, fetchProductByIdAsync } from "../ProductSlice";
+import { SelectedProductByid, fetchProductByIdAsync } from "../../product-list/ProductSlice";
 import { useParams } from "react-router-dom";
 import { AddToCartAsync } from "../../Cart/CartSlice";
 import { selectLoggedInUser } from "../../Auth/authSlice";
@@ -27,7 +27,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProductDetails() {
+export default function AdminProductDetails() {
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
   const product = useSelector(SelectedProductByid);

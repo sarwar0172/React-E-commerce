@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
@@ -8,6 +8,9 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectedItemsbyId } from "../Cart/CartSlice";
+import { selectLoggedInUser } from "../Auth/authSlice";
 
 const user = {
   name: "Tom Cook",
@@ -16,13 +19,15 @@ const user = {
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
+  { name: "Dashboard", link: "#", user: true },
+  { name: "Team", link: "#", user: true },
+  { name: "Admin", link: "/admin",admin:true },
 ];
 const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
+  { name: "Your Profile", link: "/profile" },
+  { name: "My Orders", link: "/order" },
+  { name: "Sign out", link: "/logout" },
+
 ];
 
 function classNames(...classes) {
@@ -30,6 +35,10 @@ function classNames(...classes) {
 }
 
 function Navbar({ children }) {
+  const items=useSelector(selectedItemsbyId)
+  const user=useSelector(selectLoggedInUser)
+
+
   return (
     <div className="min-h-full">
       <Disclosure as="nav" className="bg-gray-800">
@@ -38,6 +47,7 @@ function Navbar({ children }) {
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="flex h-16 items-center justify-between">
                 <div className="flex items-center">
+                  <Link to='/'>
                   <div className="flex-shrink-0">
                     <img
                       className="h-8 w-8"
@@ -45,12 +55,13 @@ function Navbar({ children }) {
                       alt="Your Company"
                     />
                   </div>
+                  </Link>
                   <div className="hidden md:block">
                     <div className="ml-10 flex items-baseline space-x-4">
                       {navigation.map((item) => (
-                        <a
+                        item[user.role]? <Link
                           key={item.name}
-                          href={item.href}
+                          to={item.link}
                           className={classNames(
                             item.current
                               ? "bg-gray-900 text-white"
@@ -60,7 +71,7 @@ function Navbar({ children }) {
                           aria-current={item.current ? "page" : undefined}
                         >
                           {item.name}
-                        </a>
+                        </Link>:null
                       ))}
                     </div>
                   </div>
@@ -81,9 +92,9 @@ function Navbar({ children }) {
                       
                     </button>
                     </Link>
-                    <span className="inline-flex items-center rounded-md  bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 mb-5" >
-                        3
-                      </span>
+                   {items.length>0&& <span className="inline-flex items-center rounded-md  bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 mb-5" >
+                       {items.length}
+                      </span>}
 
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">
@@ -111,15 +122,15 @@ function Navbar({ children }) {
                           {userNavigation.map((item) => (
                             <Menu.Item key={item.name}>
                               {({ active }) => (
-                                <a
-                                  href={item.href}
+                                <Link
+                                  to={item.link}
                                   className={classNames(
                                     active ? "bg-gray-100" : "",
                                     "block px-4 py-2 text-sm text-gray-700"
                                   )}
                                 >
                                   {item.name}
-                                </a>
+                                </Link>
                               )}
                             </Menu.Item>
                           ))}
@@ -190,9 +201,9 @@ function Navbar({ children }) {
             
                   </button>
                   </Link>
-                  <span className="inline-flex items-center rounded-md  bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 mb-5">
-                      3
-                    </span>
+                 {items.length>0&& <span className="inline-flex items-center rounded-md  bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 mb-5">
+                  {items.length}
+                    </span>}
                 </div>
                 <div className="mt-3 space-y-1 px-2">
                   {userNavigation.map((item) => (
