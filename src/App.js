@@ -30,6 +30,8 @@ import ForgotPasswordPage from "./pages/ForgotPasswordpage";
 import ProtectedAdmin from "./features/Auth/components/protectedAdmin";
 import AdminHome from "./pages/AdminHome";
 import AdminProductDetailsPage from "./pages/adminProductdetailPage";
+import ProductFrom from "./features/admin/component/productFrom";
+import AdminProductFromPage from "./pages/AdminProductFromPage";
 
 const router = createBrowserRouter([
   {
@@ -90,6 +92,22 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/admin/productFrom",
+    element: (
+      <ProtectedAdmin>
+       <AdminProductFromPage></AdminProductFromPage>
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/admin/productFrom/edit/:id",
+    element: (
+      <ProtectedAdmin>
+       <AdminProductFromPage></AdminProductFromPage>
+      </ProtectedAdmin>
+    ),
+  },
+  {
     path: "/order-success/:id",
     element: <OrderSuccess></OrderSuccess>,
   },
@@ -109,6 +127,7 @@ const router = createBrowserRouter([
     path: "/forgot_password",
     element: <ForgotPasswordPage></ForgotPasswordPage>,
   },
+
   {
     path: "*",
     element: <PageNotFound></PageNotFound>,
@@ -124,7 +143,7 @@ function App() {
     }
     if (UserID) {
       dispatch(fetchItemByuserIdAsynce(UserID.id));
-      dispatch(fetchLoggedInUserAsync(UserID.id))
+      dispatch(fetchLoggedInUserAsync(UserID.id));
     }
   }, [dispatch, UserID]);
   return (

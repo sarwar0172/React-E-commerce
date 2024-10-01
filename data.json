@@ -1795,6 +1795,84 @@
         "https://cdn.dummyjson.com/products/images/groceries/Kiwi/1.png"
       ],
       "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Kiwi/thumbnail.png"
+    },
+    {
+      "id": "7eee",
+      "title": "apple laptop",
+      "description": "this is an apple laptop",
+      "price": "1000",
+      "stock": "2",
+      "thumbnail": "https://www.startech.com.bd/image/cache/catalog/laptop/apple/macbook-air/space-gray/13-inch/macbook-air-13-3-inch-500x500.webp",
+      "category": "laptops",
+      "images": [
+        "https://www.custommacbd.com/cdn/shop/products/macbook-14-space-gray-Custom-Mac-BD_291c5761-9f90-414b-8b62-dbb6af29b704_1200x1200.jpg?v=1659593185",
+        "https://media.wired.com/photos/59e952e4f572231fe56c3937/master/w_2560%2Cc_limit/rosegold-macbook-1.jpg"
+      ]
+    },
+    {
+      "id": "c6a8",
+      "title": "new product",
+      "description": "sfsadfasdf",
+      "price": "10",
+      "stock": "2",
+      "thumbnail": "https://cdn.thewirecutter.com/wp-content/media/2022/08/macbook-2048px-9765.jpg?auto=webp&quality=75&width=1024",
+      "category": "laptops",
+      "images": [
+        "https://www.custommacbd.com/cdn/shop/products/macbook-14-space-gray-Custom-Mac-BD_291c5761-9f90-414b-8b62-dbb6af29b704_1200x1200.jpg?v=1659593185",
+        "https://rjgroupplus.com/wp-content/uploads/2023/08/apple-laptop.png"
+      ]
+    },
+    {
+      "id": "fc93",
+      "title": "laptop",
+      "description": "sdfaf",
+      "price": "200",
+      "stock": "1",
+      "thumbnail": "https://cdn.thewirecutter.com/wp-content/media/2022/08/macbook-2048px-9765.jpg?auto=webp&quality=75&width=1024",
+      "category": "laptops",
+      "images": [
+        "https://www.custommacbd.com/cdn/shop/products/macbook-14-space-gray-Custom-Mac-BD_291c5761-9f90-414b-8b62-dbb6af29b704_1200x1200.jpg?v=1659593185",
+        "https://rjgroupplus.com/wp-content/uploads/2023/08/apple-laptop.png"
+      ]
+    },
+    {
+      "id": "d970",
+      "title": "lapto3",
+      "description": "sdfsadf",
+      "price": "200",
+      "stock": "2",
+      "thumbnail": "https://cdn.thewirecutter.com/wp-content/media/2022/08/macbook-2048px-9765.jpg?auto=webp&quality=75&width=1024",
+      "category": "laptops",
+      "images": [
+        "https://m.media-amazon.com/images/I/51hJIsWMagL._AC_UF1000,1000_QL80_.jpg",
+        "https://media.wired.com/photos/59e952e4f572231fe56c3937/master/w_2560%2Cc_limit/rosegold-macbook-1.jpg"
+      ]
+    },
+    {
+      "id": "dc19",
+      "title": "dfsdf",
+      "description": "dfdfgdf",
+      "price": "45",
+      "stock": "6",
+      "thumbnail": "https://cdn.thewirecutter.com/wp-content/media/2022/08/macbook-2048px-9765.jpg?auto=webp&quality=75&width=1024",
+      "category": "laptops",
+      "images": [
+        "https://asset.kompas.com/crops/vdEASs7PJ0jDDtfrmsRhDAO0HnY=/0x0:780x520/750x500/data/photo/2020/12/19/5fdde71d33aee.jpg",
+        "https://cdn.thewirecutter.com/wp-content/media/2022/08/macbook-2048px-9765.jpg?auto=webp&quality=75&width=1024"
+      ]
+    },
+    {
+      "id": "3a11",
+      "title": "laptop3",
+      "description": "dfasdfsaf",
+      "price": "1000",
+      "stock": "2",
+      "thumbnail": "https://cdn.thewirecutter.com/wp-content/media/2022/08/macbook-2048px-9765.jpg?auto=webp&quality=75&width=1024",
+      "category": "laptops",
+      "images": [
+        "https://m.media-amazon.com/images/I/51hJIsWMagL._AC_UF1000,1000_QL80_.jpg",
+        "https://rjgroupplus.com/wp-content/uploads/2023/08/apple-laptop.png"
+      ]
     }
   ],
   "total": 194,
@@ -1843,7 +1921,7 @@
       "id": "939b",
       "email": "sarwarhossain017244@gmail.com",
       "password": "ro",
-      "role":"admin",
+      "role": "admin",
       "address": [
         {
           "firstName": "tan",

@@ -358,9 +358,11 @@ export default function AdminProductList() {
                 {/* Product grid */}
                 <div className="lg:col-span-3">
                   <div>
-                    <button className=" mx-8 rounded-md bg-green-600 px-3 py-2 text-sm font-semibold leading-6 text-white">
+                    <Link 
+                     to="/admin/productFrom"
+                    className=" mx-8 rounded-md bg-green-600 px-3 py-2 text-sm font-semibold leading-6 text-white">
                       Add products
-                    </button>
+                    </Link>
                   </div>
                   {/* products */}
 
@@ -406,10 +408,12 @@ export default function AdminProductList() {
                                     </p>
                                   </div>
                                 </Link>
-                                <div>
-                                  <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-6 text-white">
-                                    Edit
-                                  </button>
+                                <div className="pt-3">
+                                  <Link 
+                                  to={`/admin/productFrom/edit/${product.id}`}
+                                   className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-6 text-white mt-2">
+                                    Edit product
+                                  </Link>
                                 </div>
                               </div>
                             ))
